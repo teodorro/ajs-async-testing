@@ -19,6 +19,8 @@ export default class GameSavingLoader {
       resolve(gameSaving);
     }).catch((error) => {
       console.log(error);
+      // throw new Error('error saving game');
+      return new Promise((resolve) => resolve('error saving game'));
     });
   }
 }

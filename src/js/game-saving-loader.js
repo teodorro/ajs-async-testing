@@ -4,9 +4,9 @@ import GameSaving from './game-saving';
 
 export default class GameSavingLoader {
   static async load() {
-    const binData = await read();
-    const jsonData = await json(binData);
-    return new Promise((resolve) => {
+    try {
+      const binData = await read();
+      const jsonData = await json(binData);
       const gsJson = JSON.parse(jsonData);
       const gameSaving = new GameSaving(
         gsJson.id,
@@ -16,11 +16,9 @@ export default class GameSavingLoader {
         gsJson.userInfo.level,
         gsJson.userInfo.points,
       );
-      resolve(gameSaving);
-    }).catch((error) => {
-      console.log(error);
-      // throw new Error('error saving game');
-      return new Promise((resolve) => resolve('error saving game'));
-    });
+      return gameSaving;
+    } catch (error) {
+      return 'error saving game';
+    }
   }
 }
